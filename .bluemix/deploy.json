@@ -13,15 +13,36 @@
     "properties": {
         "dev-region": {
             "description": "The bluemix region",
-            "type": "string"
+            "type": "string",
+            "validator": {
+                "v-type": "cf-region",
+                "params": ["api-key"]
+            }
         },
         "dev-organization": {
             "description": "The bluemix org",
-            "type": "string"
+            "type": "string",
+            "validator": {
+                "v-type": "cf-org",
+                "params": ["dev-region"]
+            }
         },
         "dev-space": {
             "description": "The bluemix space",
-            "type": "string"
+            "type": "string",
+            "validator": {
+                "v-type": "cf-space",
+                "params": ["dev-organization"]
+            }
+        },
+        "api-key": {
+            "description": {
+                "$ref": "#/messages/deploy.apiKeyDescription"
+            },
+            "type": "string",
+            "validator": {
+                "v-type": "api-key"
+            }
         },
         "app-name": {
             "description": {
@@ -34,12 +55,13 @@
         "dev-region",
         "dev-organization",
         "dev-space",
-        "app-name"
+        "app-name",
+        "api-key"
     ],
     "form": [
         {
             "type": "validator",
-            "url": "/devops/setup/bm-helper/helper.html"
+            "url": "/devops/validator/validator-v1.html"
         },
         {
             "type": "text",
@@ -48,6 +70,14 @@
                 "$ref": "#/messages/deploy.appName"
             },
             "key": "app-name"
+        },
+        {
+            "type": "password",
+            "readonly": false,
+            "title": {
+                "$ref": "#/messages/deploy.apiKeyTitle"
+            },
+            "key": "api-key"
         },
         {
             "type": "table",
